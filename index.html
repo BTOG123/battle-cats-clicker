@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Battle Cats Clicker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            color: white;
+        }
+
+        .sectionLeft {
+            float: left;
+            width: 70%;
+        }
+
+        .sectionRight {
+            float: right;
+            width: 30%;
+        }
+
+        .scoreContainer {
+            background-color: rgb(50, 50, 50);
+            width: 50%;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .clickerContainer img {
+            position: relative;
+            height: 256px;
+            width: 256px;
+            transition: all .3s ease-in-out;
+        }
+
+        .clickerContainer img:hover {
+            transform: scale(1.10);
+        }
+
+        .clickerContainer img:active {
+            transform: scale(0.99);
+        }
+
+        .shopButton, .upgradeButton {
+            background-color: #4b4b4b;
+            transition: all .3s ease-in-out;
+            border-radius: 10px;
+            width: 100%;
+            margin: 10px 0px 10px 0px;
+        }
+
+        .shopButton:hover, .upgradeButton:hover {
+            background-color: #5d5d5d;
+            transition: all .3s ease-in-out;
+        }
+
+        .shopButton #image, .upgradeButton #upgradeName {
+            width: 25%;
+        }
+
+        .shopButton img {
+            height: 64px;
+            width: 64px;
+        }
+
+        .shopButton #nameAndCost p {
+            margin: 0px;
+            width: 60%;
+        }
+
+        .shopButton #nameAndCost p:first-of-type {
+            font-size: 24px;
+        }
+
+        .shopButton #amount {
+            font-size: 48px;
+            color: #a5a5a5;
+            width: 15%;
+        }
+
+        .upgradeButton {
+            background-color: #4b4b4b;
+            transition: all .3s ease-in-out;
+            border-radius: 10px;
+            width: 100%;
+            margin: 10px 0px 10px 0px;
+        }
+
+        .upgradeButton #upgradeName {
+            font-size: 24px;
+        }
+
+        #catCapsule {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="sectionLeft">
+        <center>
+            <div class="scoreContainer">
+                <span id="score">0</span> Cat Food<br>
+                <span id="scorepersecond">0</span> Cat Food per second<br>
+                <span id="catTickets">0</span> Cat Tickets
+            </div>
+            <br>
+            <div class="clickerContainer">
+                <img id="mainCat" src="images/cat.png" onclick="addToScore(clickingPower)">
+            </div>
+
+            <table class="upgradeButton" onclick="buyUpgrade()">
+                <tr>
+                    <td id="upgradeName">EoC Chapter 2 - <span id="upgradeCost">1000</span> Cat Food</td>
+                </tr>
+            </table>
+
+            <table class="shopButton" onclick="buyCatTicket()">
+                <tr>
+                    <td id="image"><img id="catTicket" src="images/cat-ticket.png"></td>
+                    <td id="nameAndCost">
+                        <p id="catTicketName">Cat Ticket</p>
+                        <p><span id="catTicketCost">1000</span> Cat Food</p>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="shopButton" onclick="useCatCapsule()">
+                <tr>
+                    <td id="image"><img id="catCapsule" src="images/cat-capsule.png"></td>
+                    <td id="nameAndCost">
+                        <p id="catCapsuleName">Cat Capsule</p>
+                        <p><span id="catCapsuleCost">0</span> Cat Tickets</p>
+                    </td>
+                    <td id="amount"><span id="catCapsules">0</span></td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <div class="sectionRight">
+        <table class="shopButton" onclick="buyCat()">
+            <tr>
+                <td id="image"><img id="catImage" src="images/cat.png"></td>
+                <td id="nameAndCost">
+                    <p id="catName">Cat</p>
+                    <p><span id="catcost">15</span> Cat Food</p>
+                </td>
+                <td id="amount"><span id="cats">0</span></td>
+            </tr>
+        </table>
+
+        <table class="shopButton" onclick="buyTankCat()">
+            <tr>
+                <td id="image"><img id="tankCatImage" src="images/tank-cat.png"></td>
+                <td id="nameAndCost">
+                    <p id="tankCatName">Tank Cat</p>
+                    <p><span id="tankcatcost">100</span> Cat Food</p>
+                </td>
+                <td id="amount"><span id="tankcats">0</span></td>
+            </tr>
+        </table>
+
+        <table class="shopButton" onclick="buyAxeCat()">
+            <tr>
+                <td id="image"><img id="axeCatImage" src="images/axe-cat.png"></td>
+                <td id="nameAndCost">
+                    <p id="axeCatName">Axe Cat</p>
+                    <p><span id="axecatcost">500</span> Cat Food</p>
+                </td>
+                <td id="amount"><span id="axecats">0</span></td>
+            </tr>
+        </table>
+    </div>
+    <script>
+    var score = 0;
+    var clickingPower = 1;
+
+    var catCost = 15;
+    var cats = 0;
+    var catMaxLevel = 10;
+    var tankCatCost = 100;
+    var tankcats = 0;
+    var tankCatMaxLevel = 10;
+    var axeCatCost = 500;
+    var axecats = 0;
+    var axeCatMaxLevel = 10;
+
+    var upgradeCost = 1000;
+    var upgradeBought = false;
+
+    var catTicketCost = 1000;
+    var catTickets = 0;
+    var catCapsules = 0;
+
+    function buyCat() {
+        if (score >= catCost && (cats < (upgradeBought ? 20 : catMaxLevel) || catTickets > 0)) {
+            score -= catCost;
+            cats += 1;
+            catCost = Math.round(catCost * 1.15);
+
+            document.getElementById("score").innerHTML = score;
+            document.getElementById("catcost").innerHTML = catCost;
+            updateCatDisplay();
+            updateScorePerSecond();
+        }
+    }
+
+    function buyTankCat() {
+        if (score >= tankCatCost && (tankcats < (upgradeBought ? 20 : tankCatMaxLevel) || catTickets > 0)) {
+            score -= tankCatCost;
+            tankcats += 1;
+            tankCatCost = Math.round(tankCatCost * 1.15);
+
+            document.getElementById("score").innerHTML = score;
+            document.getElementById("tankcatcost").innerHTML = tankCatCost;
+            updateTankCatDisplay();
+            updateScorePerSecond();
+        }
+    }
+
+    function buyAxeCat() {
+        if (score >= axeCatCost && (axecats < (upgradeBought ? 20 : axeCatMaxLevel) || catTickets > 0)) {
+            score -= axeCatCost;
+            axecats += 1;
+            axeCatCost = Math.round(axeCatCost * 1.15);
+
+            document.getElementById("score").innerHTML = score;
+            document.getElementById("axecatcost").innerHTML = axeCatCost;
+            updateAxeCatDisplay();
+            updateScorePerSecond();
+        }
+    }
+
+    function buyUpgrade() {
+        if (score >= upgradeCost && !upgradeBought) {
+            score -= upgradeCost;
+            upgradeBought = true;
+            catMaxLevel = 20;
+            tankCatMaxLevel = 20;
+            axeCatMaxLevel = 20;
+            document.getElementById("upgradeCost").innerHTML = "Purchased";
+            updateScorePerSecond();
+        }
+    }
+
+    function buyCatTicket() {
+        if (score >= catTicketCost) {
+            score -= catTicketCost;
+            catTickets += 1;
+            document.getElementById("score").innerHTML = score;
+            document.getElementById("catTickets").innerHTML = catTickets;
+        }
+    }
+
+    function useCatCapsule() {
+        if (catTickets > 0) {
+            catTickets -= 1;
+            document.getElementById("catTickets").innerHTML = catTickets;
+
+            var possibleCats = [];
+            if (cats < 30) possibleCats.push('cat');
+            if (tankcats < 30) possibleCats.push('tankcat');
+            if (axecats < 30) possibleCats.push('axecat');
+
+            if (possibleCats.length > 0) {
+                var randomCat = possibleCats[Math.floor(Math.random() * possibleCats.length)];
+                if (randomCat === 'cat') {
+                    cats += 1;
+                    updateCatDisplay();
+                } else if (randomCat === 'tankcat') {
+                    tankcats += 1;
+                    updateTankCatDisplay();
+                } else if (randomCat === 'axecat') {
+                    axecats += 1;
+                    updateAxeCatDisplay();
+                }
+
+                catCapsules += 1;
+                document.getElementById("catCapsules").innerHTML = catCapsules;
+            }
+        }
+    }
+
+    function addToScore(amount) {
+        score += amount;
+        document.getElementById("score").innerHTML = score;
+    }
+
+    function updateScorePerSecond() {
+        var scorePerSecond = cats + tankcats * 5 + axecats * 16;
+        document.getElementById("scorepersecond").innerHTML = scorePerSecond;
+    }
+
+    function updateCatDisplay() {
+        var levelText = (cats > catMaxLevel ? `${catMaxLevel}+${cats - catMaxLevel}` : cats);
+        document.getElementById("cats").innerHTML = levelText;
+        updateCatForm();
+    }
+
+    function updateTankCatDisplay() {
+        var levelText = (tankcats > tankCatMaxLevel ? `${tankCatMaxLevel}+${tankcats - tankCatMaxLevel}` : tankcats);
+        document.getElementById("tankcats").innerHTML = levelText;
+        updateTankCatForm();
+    }
+
+    function updateAxeCatDisplay() {
+        var levelText = (axecats > axeCatMaxLevel ? `${axeCatMaxLevel}+${axecats - axeCatMaxLevel}` : axecats);
+        document.getElementById("axecats").innerHTML = levelText;
+        updateAxeCatForm();
+    }
+
+    function updateCatForm() {
+        if (cats >= 30) {
+            document.getElementById("catImage").src = "images/mohawk-cat.png";
+            document.getElementById("catName").innerHTML = "Mohawk Cat";
+        } else if (cats >= 10) {
+            document.getElementById("catImage").src = "images/macho-cat.png";
+            document.getElementById("catName").innerHTML = "Macho Cat";
+        }
+    }
+
+    function updateTankCatForm() {
+        if (tankcats >= 30) {
+            document.getElementById("tankCatImage").src = "images/eraser-cat.png";
+            document.getElementById("tankCatName").innerHTML = "Eraser Cat";
+        } else if (tankcats >= 10) {
+            document.getElementById("tankCatImage").src = "images/wall-cat.png";
+            document.getElementById("tankCatName").innerHTML = "Wall Cat";
+        }
+    }
+
+    function updateAxeCatForm() {
+        if (axecats >= 30) {
+            document.getElementById("axeCatImage").src = "images/dark-cat.png";
+            document.getElementById("axeCatName").innerHTML = "Dark Cat";
+        } else if (axecats >= 10) {
+            document.getElementById("axeCatImage").src = "images/brave-cat.png";
+            document.getElementById("axeCatName").innerHTML = "Brave Cat";
+        }
+    }
+
+    setInterval(function() {
+        var increment = 0;
+        increment += cats;
+        increment += tankcats * 5;
+        increment += axecats * 16;
+
+        score += increment;
+        document.getElementById("score").innerHTML = score;
+        document.title = score + " Cat Food - Battle Cats Clicker";
+    }, 1000); // 1000ms = 1 second
+</script>
+</body>
+</html>
