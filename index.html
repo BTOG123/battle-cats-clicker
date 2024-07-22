@@ -107,7 +107,7 @@
             </div>
             <br>
             <div class="clickerContainer">
-                <img id="mainCat" src="https://static.wikia.nocookie.net/battle-cats/images/5/58/Uni000_f00.png/revision/latest?cb=20160725143253" onclick="addToScore(clickingPower)">
+                <img id="mainCat" src="images/cat.png" onclick="addToScore(clickingPower)">
             </div>
 
             <table class="upgradeButton" onclick="buyUpgrade()">
@@ -118,7 +118,7 @@
 
             <table class="shopButton" onclick="buyCatTicket()">
                 <tr>
-                    <td id="image"><img id="catTicket" src="https://static.wikia.nocookie.net/battle-cats/images/a/a7/GatyaitemD_20_f.png/revision/latest?cb=20160223150205"></td>
+                    <td id="image"><img id="catTicket" src="images/cat-ticket.png"></td>
                     <td id="nameAndCost">
                         <p id="catTicketName">Cat Ticket</p>
                         <p><span id="catTicketCost">1000</span> Cat Food</p>
@@ -128,7 +128,7 @@
 
             <table class="shopButton" onclick="useCatCapsule()">
                 <tr>
-                    <td id="image"><img id="catCapsule" src="https://static.wikia.nocookie.net/battle-cats/images/7/7d/Normalcapsule.png/revision/latest?cb=20230427013156"></td>
+                    <td id="image"><img id="catCapsule" src="images/cat-capsule.png"></td>
                     <td id="nameAndCost">
                         <p id="catCapsuleName">Cat Capsule</p>
                         <p><span id="catCapsuleCost">0</span> Cat Tickets</p>
@@ -141,7 +141,7 @@
     <div class="sectionRight">
         <table class="shopButton" onclick="buyCat()">
             <tr>
-                <td id="image"><img id="catImage" src="https://static.wikia.nocookie.net/battle-cats/images/5/58/Uni000_f00.png/revision/latest?cb=20160725143253"></td>
+                <td id="image"><img id="catImage" src="images/cat.png"></td>
                 <td id="nameAndCost">
                     <p id="catName">Cat</p>
                     <p><span id="catcost">15</span> Cat Food</p>
@@ -152,7 +152,7 @@
 
         <table class="shopButton" onclick="buyTankCat()">
             <tr>
-                <td id="image"><img id="tankCatImage" src="https://static.wikia.nocookie.net/battle-cats/images/2/28/Uni001_f00.png/revision/latest?cb=20160725143433"></td>
+                <td id="image"><img id="tankCatImage" src="images/tank-cat.png"></td>
                 <td id="nameAndCost">
                     <p id="tankCatName">Tank Cat</p>
                     <p><span id="tankcatcost">100</span> Cat Food</p>
@@ -163,7 +163,7 @@
 
         <table class="shopButton" onclick="buyAxeCat()">
             <tr>
-                <td id="image"><img id="axeCatImage" src="https://static.wikia.nocookie.net/battle-cats/images/5/53/Uni002_f00.png/revision/latest?cb=20160725143728"></td>
+                <td id="image"><img id="axeCatImage" src="images/axe-cat.png"></td>
                 <td id="nameAndCost">
                     <p id="axeCatName">Axe Cat</p>
                     <p><span id="axecatcost">500</span> Cat Food</p>
@@ -312,30 +312,30 @@
 
     function updateCatForm() {
         if (cats >= 30) {
-            document.getElementById("catImage").src = "https://static.wikia.nocookie.net/battle-cats/images/a/af/Uni000_s00.png/revision/latest?cb=20200928133907";
+            document.getElementById("catImage").src = "images/mohawk-cat.png";
             document.getElementById("catName").innerHTML = "Mohawk Cat";
         } else if (cats >= 10) {
-            document.getElementById("catImage").src = "https://static.wikia.nocookie.net/battle-cats/images/0/0e/Uni000_c00.png/revision/latest?cb=20160725143308";
+            document.getElementById("catImage").src = "images/macho-cat.png";
             document.getElementById("catName").innerHTML = "Macho Cat";
         }
     }
 
     function updateTankCatForm() {
         if (tankcats >= 30) {
-            document.getElementById("tankCatImage").src = "https://static.wikia.nocookie.net/battle-cats/images/8/89/Uni001_s00.png/revision/latest?cb=20200928133911";
+            document.getElementById("tankCatImage").src = "images/eraser-cat.png";
             document.getElementById("tankCatName").innerHTML = "Eraser Cat";
         } else if (tankcats >= 10) {
-            document.getElementById("tankCatImage").src = "https://static.wikia.nocookie.net/battle-cats/images/7/73/Uni001_c00.png/revision/latest?cb=20160725143528";
+            document.getElementById("tankCatImage").src = "images/wall-cat.png";
             document.getElementById("tankCatName").innerHTML = "Wall Cat";
         }
     }
 
     function updateAxeCatForm() {
         if (axecats >= 30) {
-            document.getElementById("axeCatImage").src = "https://static.wikia.nocookie.net/battle-cats/images/3/38/Uni002_s00.png/revision/latest?cb=20200928133915";
+            document.getElementById("axeCatImage").src = "images/dark-cat.png";
             document.getElementById("axeCatName").innerHTML = "Dark Cat";
         } else if (axecats >= 10) {
-            document.getElementById("axeCatImage").src = "https://static.wikia.nocookie.net/battle-cats/images/d/dd/Uni002_c00.png/revision/latest?cb=20160725143739";
+            document.getElementById("axeCatImage").src = "images/brave-cat.png";
             document.getElementById("axeCatName").innerHTML = "Brave Cat";
         }
     }
